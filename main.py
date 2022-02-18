@@ -8,8 +8,8 @@ def func(string):
         create_data("catsMain.txt")
     elif label_choice["text"] == "Выбрана тема про собак":
         create_data("dogsMain.txt")
-    elif label_choice["text"] == "Выбрана тема про кроликов":
-        create_data("rabbitsMain.txt")
+    elif label_choice["text"] == "Выбрана тема про хомяков":
+        create_data("hamstersMain.txt")
 
 
 root = Tk()
@@ -32,11 +32,11 @@ btn_dogs = Button(text="Тема: Собаки", background="#ffa26a", foregroun
                   padx="60", pady="10", font="16", command=lambda: func("Выбрана тема про собак"))
 btn_dogs.place(x=255, y=100)
 
-btn_rabbits = Button(text="Тема: Кролики", background="#ffa26a", foreground="black",
-                     padx="60", pady="10", font="16", command=lambda: func("Выбрана тема про кроликов"))
+btn_rabbits = Button(text="Тема: Хомяки", background="#ffa26a", foreground="black",
+                     padx="60", pady="10", font="16", command=lambda: func("Выбрана тема про хомяков"))
 btn_rabbits.place(x=515, y=100)
 
-label_text = Label(text="Введите текст в форму для сравнения: \n (Берётся из папки ForComparison) ", fg="black", bg="#d0b084",
+label_text = Label(text="Введите текст в форму для сравнения: \n (Можно взять из папки ForComparison) ", fg="black", bg="#d0b084",
                    font="Arial 14")
 label_text.place(relx=0.5, rely=0.3, anchor='center')
 

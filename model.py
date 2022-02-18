@@ -8,15 +8,8 @@ def print_data(data):
         print(elem)
 
 
-def length_string(string):
-    if len(string) > 30:
-        return True
-    else:
-        return False
-
-
-def cleaning_data(fileName):
-    data = open(fileName, 'r').read()
+def cleaning_data(file_name):
+    data = open(file_name, 'r').read()
     data = cleaning_check_data(data)
     return data
 
@@ -27,14 +20,13 @@ def cleaning_check_data(data):
     data = re.sub(r"[,!?@\'\`\"\_\n«»:;()]", "", data)
     data = re.sub(r"[-—]", " ", data)
     data = data.split(".")
-    data = list(filter(length_string, data))
     return data
 
 
-def create_dataframe_check(main, notMain):
+def create_dataframe_check(main, not_main):
     return pd.DataFrame({
-        'text': main + notMain,
-        'class_label': [1 for i in range(0, len(main))] + [0 for i in range(0, len(notMain))]
+        'text': main + not_main,
+        'class_label': [1 for i in range(0, len(main))] + [0 for i in range(0, len(not_main))]
     })
 
 
@@ -50,11 +42,11 @@ def tokenize(data):
     data["tokens"] = data["text"].apply(tokenizer.tokenize)
 
 
-def create_data(fileName):
-    dataMain = cleaning_data(fileName)
-    notMain = cleaning_data("notMain.txt")
+def create_data(file_name):
+    main = cleaning_data(file_name)
+    not_main = cleaning_data("notMain.txt")
     global clean_data
-    clean_data = create_dataframe_check(dataMain, notMain)
+    clean_data = create_dataframe_check(main, not_main)
     tokenize(clean_data)
 
 
@@ -79,9 +71,9 @@ def find_accuracy(obj, label_accuracy):
 
     from sklearn import ensemble
     classifier = ensemble.GradientBoostingClassifier(
-        n_estimators=100,
+        n_estimators=1000,
         learning_rate=0.5,
-        max_depth=500,
+        max_depth=2,
     )
 
     classifier.fit(X_train, y_train)
