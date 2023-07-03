@@ -44,7 +44,7 @@ def tokenize(data):
 
 def create_data(file_name):
     main = cleaning_data(file_name)
-    not_main = cleaning_data("notMain.txt")
+    not_main = cleaning_data("data/notMain.txt")
     global clean_data
     clean_data = create_dataframe_check(main, not_main)
     tokenize(clean_data)

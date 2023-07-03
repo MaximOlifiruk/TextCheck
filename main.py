@@ -5,11 +5,11 @@ from model import *
 def func(string):
     label_choice.config(text=string)
     if label_choice["text"] == "Выбрана тема про котов":
-        create_data("catsMain.txt")
+        create_data("data/catsMain.txt")
     elif label_choice["text"] == "Выбрана тема про собак":
-        create_data("dogsMain.txt")
+        create_data("data/dogsMain.txt")
     elif label_choice["text"] == "Выбрана тема про хомяков":
-        create_data("hamstersMain.txt")
+        create_data("data/hamstersMain.txt")
 
 
 root = Tk()
