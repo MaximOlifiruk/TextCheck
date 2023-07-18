@@ -1,6 +1,10 @@
 import pandas as pd
 import regex as re
 from nltk.tokenize import RegexpTokenizer
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn import ensemble
+from sklearn import metrics
 
 
 def print_data(data):
@@ -60,16 +64,12 @@ def give_text(obj):
 def find_accuracy(obj, label_accuracy):
     give_text(obj)
     text = pd.concat([clean_data, clean_data_check], axis=0)
-
-    from sklearn.feature_extraction.text import CountVectorizer
     text_vec = CountVectorizer().fit_transform(text['text'])
 
-    from sklearn.model_selection import train_test_split
     X_train, X_test, y_train, y_test = train_test_split(text_vec, text['class_label'],
                                                         test_size=clean_data_check.size / (clean_data_check.size + clean_data.size)
                                                         , random_state=0, shuffle=False)
 
-    from sklearn import ensemble
     classifier = ensemble.GradientBoostingClassifier(
         n_estimators=1000,
         learning_rate=0.5,
@@ -78,8 +78,6 @@ def find_accuracy(obj, label_accuracy):
 
     classifier.fit(X_train, y_train)
     predictions = classifier.predict(X_test)
-
-    from sklearn import metrics
     label_accuracy["text"] = "Точность: " + str(metrics.accuracy_score(y_test, predictions))
 
 
