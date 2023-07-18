@@ -2,21 +2,16 @@ from tkinter import *
 from model import *
 
 
-def func(string):
-    label_choice.config(text=string)
-    topic_files = {
-        "Выбрана тема про котов": "data/catsMain.txt",
-        "Выбрана тема про собак": "data/dogsMain.txt",
-        "Выбрана тема про хомяков": "data/hamstersMain.txt",
-        "Выбрана тема про дельфинов": "data/dolphinsMain.txt",
-        "Выбрана тема про бабочек": "data/butterfliesMain.txt"
-    }
-    
-    selected_topic = label_choice["text"]
-    if selected_topic in topic_files:
-        create_data(topic_files[selected_topic])
+def choose_topic(topic):
+    label_choice.config(text="Тема - " + topic.lower() + ", выбрана")
+    create_data("data/" + topic.lower() + ".txt")
 
 
+def show_menu(event):
+    menu.post(event.x_root, event.y_root)
+
+
+topics = ["Коты", "Собаки", "Хомяки", "Дельфины", "Бабочки"]
 root = Tk()
 root.title("GUI на Python")
 root["bg"] = "#d0b084"
@@ -29,33 +24,25 @@ main_label.pack()
 label_choice = Label(text="Ничего не выбрано", fg="black", bg="#d0b084", font="Arial 14")
 label_choice.pack()
 
-btn_cats = Button(text="Тема: Коты", background="#ffa26a", foreground="black",
-                  padx="60", pady="10", font="16", command=lambda: func("Выбрана тема про котов"))
-btn_cats.place(x=15, y=100)
+menu = Menu(root, tearoff=0)
+for topic in topics:
+    menu.add_command(label=topic, command=lambda topic=topic: choose_topic(topic))
 
-btn_dogs = Button(text="Тема: Собаки", background="#ffa26a", foreground="black",
-                  padx="60", pady="10", font="16", command=lambda: func("Выбрана тема про собак"))
-btn_dogs.place(x=255, y=100)
+btn_menu = Button(root, text="Выберите тему", background="#ffa26a", foreground="black", padx="20", pady="10", font="12")
+btn_menu.pack()
+btn_menu.bind("<Button-1>", show_menu)
 
-btn_rabbits = Button(text="Тема: Хомяки", background="#ffa26a", foreground="black",
-                     padx="60", pady="10", font="16", command=lambda: func("Выбрана тема про хомяков"))
-btn_rabbits.place(x=515, y=100)
-
-label_text = Label(text="Введите текст в форму для сравнения: \n (Можно взять из папки ForComparison) ", fg="black", bg="#d0b084",
-                   font="Arial 14")
-label_text.place(relx=0.5, rely=0.3, anchor='center')
+label_text = Label(text="Введите текст в форму для сравнения: \n (Можно взять из папки ForComparison) ", fg="black", bg="#d0b084", font="Arial 14")
+label_text.place(relx=0.5, rely=0.25, anchor='center')
 
 text = Text(width=90, height=15)
-text.place(relx=0.5, rely=0.53, anchor='center')
+text.place(relx=0.5, rely=0.48, anchor='center')
 
-itog = Button(text="Проверить", background="#ffa26a", foreground="black",
-              padx="70", pady="10", font="16", command=lambda: find_accuracy(text, label_accuracy))
-itog.place(x=280, y=550)
+itog = Button(text="Проверить", background="#ffa26a", foreground="black", padx="70", pady="10", font="12", command=lambda: find_accuracy(text, label_accuracy))
+itog.place(relx=0.5, rely=0.75, anchor = 'center')
 
 label_accuracy = Label(text="Точность равна: ", fg="black", bg="#d0b084", font="Arial 14")
-label_accuracy.place(relx = 0.5,
-                   rely = 0.9,
-                   anchor = 'center')
+label_accuracy.place(relx = 0.5, rely = 0.82, anchor = 'center')
 
 root.mainloop()
 
