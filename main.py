@@ -4,12 +4,17 @@ from model import *
 
 def func(string):
     label_choice.config(text=string)
-    if label_choice["text"] == "Выбрана тема про котов":
-        create_data("data/catsMain.txt")
-    elif label_choice["text"] == "Выбрана тема про собак":
-        create_data("data/dogsMain.txt")
-    elif label_choice["text"] == "Выбрана тема про хомяков":
-        create_data("data/hamstersMain.txt")
+    topic_files = {
+        "Выбрана тема про котов": "data/catsMain.txt",
+        "Выбрана тема про собак": "data/dogsMain.txt",
+        "Выбрана тема про хомяков": "data/hamstersMain.txt",
+        "Выбрана тема про дельфинов": "data/dolphinsMain.txt",
+        "Выбрана тема про бабочек": "data/butterfliesMain.txt"
+    }
+    
+    selected_topic = label_choice["text"]
+    if selected_topic in topic_files:
+        create_data(topic_files[selected_topic])
 
 
 root = Tk()
